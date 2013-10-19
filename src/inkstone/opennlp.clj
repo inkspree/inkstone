@@ -1,20 +1,21 @@
 (ns inkstone.opennlp
-  (:require opennlp.nlp))
+  (:require [opennlp.nlp :as nlp])
+  (:use [inkstone.curry :only [defcur cur]]))
 
 (comment "TOKENIZERS")
 
-(defn tokenize
-  [lang text]
-  ((tokenize-lang lang) text))
+(defonce ^:private en-tokenize!
+  (nlp/make-tokenizer
+   (clojure.java.io/resource "models/opennlp/en-token.bin")))
+
+(defonce ^:private de-tokenize!
+  (nlp/make-tokenizer
+   (clojure.java.io/resource "models/opennlp/de-token.bin")))
 
 (def ^:private tokenize-lang
-  {:en en-tokenize
-   :de de-tokenize})
+  {:en en-tokenize!
+   :de de-tokenize!})
 
-(def ^:private en-tokenize
-  (make-tokenizer
-   (.getFile (clojure.java.io/resource "models/opennlp/en-token.bin"))))
-
-(def ^:private de-tokenize
-  (make-tokenizer
-   (.getFile (clojure.java.io/resource "models/opennlp/de-token.bin"))))
+(defcur tokenize
+  [lang text]
+     ((tokenize-lang lang) text))
