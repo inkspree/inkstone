@@ -1,4 +1,13 @@
-(ns inkstone.curry)
+(ns inkstone.tools)
+
+(defn char-at [pos string] (.charAt string pos))
+
+(defn expand-file-name
+  [path]
+  (case (char-at 0 path)
+    \/ path
+    \~ (str (System/getProperty "user.home") (subs path 1))
+    (.getCanonicalPath (java.io.File. path))))
 
 (defn- curry
   [[params1 params2] body]

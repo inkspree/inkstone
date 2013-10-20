@@ -1,6 +1,6 @@
 (ns inkstone.core
   (:use [inkstone.opennlp]
-        [inkstone.curry :only [defcur cur]]
+        [inkstone.tools :only [defcur cur expand-file-name]]
         [clojure.tools.nrepl.server :only [start-server stop-server]]
         [clojure.tools.cli :only [cli]])
   (:gen-class :main true))
