@@ -11,4 +11,4 @@ pom.xml.asc
 *.swo
 \#*\#
 *~
-/resources/models
+/resources/lang/
